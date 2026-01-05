@@ -42,5 +42,13 @@ jobs:
       - if: matrix.os != 'windows-latest'
         name: Check formatting
         run: deno task format
+      - name: (Rust) Check
+        run: deno task rust:check --verbose
+      - name: (Rust) Clippy
+        run: deno task rust:clippy --verbose -- -D warnings
+      - name: (Rust) Test
+        run: deno task rust:test --verbose
+      - name: (Rust) Format Check
+        run: deno task rust:fmt:check
       - name: Build
         run: deno task build
