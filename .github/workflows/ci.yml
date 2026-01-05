@@ -44,6 +44,8 @@ jobs:
       - if: matrix.os != 'windows-latest'
         name: Check formatting
         run: deno task format
+      - name: Build
+        run: deno task build
       - name: (Rust) Check
         run: cargo check --verbose
       - name: (Rust) Clippy
@@ -52,5 +54,3 @@ jobs:
         run: cargo test --verbose
       - name: (Rust) Format Check
         run: cargo fmt --check
-      - name: Build
-        run: deno task build
