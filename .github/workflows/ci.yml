@@ -39,7 +39,8 @@ jobs:
             ./src-tauri -> target
       - name: Check lint
         run: deno task lint
-      - name: Check formatting
+      - if: matrix.os != 'windows-latest'
+        name: Check formatting
         run: deno task format
       - name: Build
         run: deno task build
