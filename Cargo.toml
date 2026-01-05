@@ -33,7 +33,7 @@ encoding_rs = "0.8"
 
 # Compression
 zip = "7"
-sevenz-rust = "0.6"
+sevenz-rust2 = { version = "0.20.1", features = ["util"] }
 unrar = "0.5"
 
 # File system

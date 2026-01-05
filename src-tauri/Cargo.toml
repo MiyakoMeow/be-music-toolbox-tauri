@@ -39,7 +39,7 @@ encoding_rs = { workspace = true }
 
 # Zip
 zip = { workspace = true }
-sevenz-rust = { workspace = true }
+sevenz-rust2 = { workspace = true }
 unrar = { workspace = true }
 
 # FS

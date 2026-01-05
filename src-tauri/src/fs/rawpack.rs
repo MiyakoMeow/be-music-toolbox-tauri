@@ -57,7 +57,7 @@ async fn extract_7z(src: &Path, dst: &Path) -> io::Result<()> {
     // sevenz-rust is a synchronous library, spawn_blocking
     let src = src.to_path_buf();
     let dst = dst.to_path_buf();
-    smol::block_on(async move { sevenz_rust::decompress_file(&src, &dst) })
+    smol::block_on(async move { sevenz_rust2::decompress_file(&src, &dst) })
         .map_err(io::Error::other)
 }
 
