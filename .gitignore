@@ -8,3 +8,9 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Other Package Managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lock
