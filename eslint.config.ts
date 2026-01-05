@@ -4,9 +4,10 @@ import tsParser from "@typescript-eslint/parser";
 import svelte from "eslint-plugin-svelte";
 import prettier from "eslint-config-prettier";
 import globals from "globals";
+import betterTailwind from "eslint-plugin-better-tailwindcss";
+import type { Linter } from "eslint";
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
+const config: Linter.Config[] = [
   // 忽略常见的构建和依赖目录
   {
     ignores: [
@@ -16,12 +17,33 @@ export default [
       "node_modules/",
       ".deno/",
       "*.config.js",
-      "*.config.ts",
     ],
   },
 
   // JavaScript/TypeScript 基础配置
   js.configs.recommended,
+
+  // Better Tailwind CSS 配置
+  {
+    files: ["**/*.svelte", "**/*.ts", "**/*.tsx"],
+    plugins: {
+      "better-tailwindcss": betterTailwind,
+    },
+    rules: {
+      "better-tailwindcss/enforce-consistent-class-order": "warn",
+      "better-tailwindcss/enforce-consistent-line-wrapping": "warn",
+      "better-tailwindcss/no-conflicting-classes": "error",
+      "better-tailwindcss/no-deprecated-classes": "error",
+      "better-tailwindcss/no-duplicate-classes": "warn",
+      "better-tailwindcss/no-unnecessary-whitespace": "warn",
+      "better-tailwindcss/no-unregistered-classes": "warn",
+    },
+    settings: {
+      "better-tailwindcss": {
+        entryPoint: "./src/main.css",
+      },
+    },
+  },
 
   // TypeScript 配置
   {
@@ -75,3 +97,5 @@ export default [
   // Prettier 配置（必须放在最后以覆盖其他规则）
   prettier,
 ];
+
+export default config;
