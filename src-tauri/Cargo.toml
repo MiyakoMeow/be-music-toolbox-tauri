@@ -16,10 +16,10 @@ name = "bms_resource_toolbox_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { workspace = true }
+tauri-build = { workspace = true, features = [] }
 
 [dependencies]
-tauri = { workspace = true }
+tauri = { workspace = true , features = [] }
 tauri-plugin-opener = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
