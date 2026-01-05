@@ -37,6 +37,8 @@ jobs:
         with:
           workspaces: |
             ./src-tauri -> target
+      - name: Check
+        run: deno task check
       - name: Check lint
         run: deno task lint
       - if: matrix.os != 'windows-latest'
