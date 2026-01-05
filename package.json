@@ -12,7 +12,8 @@
     "lint": "eslint . --concurrency=auto",
     "lint:fix": "eslint . --fix --concurrency=auto",
     "format": "prettier --check .",
-    "format:fix": "prettier --write ."
+    "format:fix": "prettier --write .",
+    "tauri": "tauri"
   },
   "license": "MIT",
   "dependencies": {
