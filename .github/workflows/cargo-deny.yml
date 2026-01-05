@@ -3,15 +3,15 @@ on:
   push:
     branches: [main]
     paths:
-      - "**/Cargo.lock"
-      - "**/Cargo.toml"
-      - "**/deny.toml"
+      - '**/Cargo.lock'
+      - '**/Cargo.toml'
+      - '**/deny.toml'
   pull_request:
     branches: [main]
     paths:
-      - "**/Cargo.lock"
-      - "**/Cargo.toml"
-      - "**/deny.toml"
+      - '**/Cargo.lock'
+      - '**/Cargo.toml'
+      - '**/deny.toml'
 jobs:
   cargo-deny:
     runs-on: ubuntu-latest
