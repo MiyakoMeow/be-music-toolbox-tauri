@@ -880,7 +880,6 @@ pub fn run() {
     }
 
     // 尝试显式创建窗口
-    use tauri::Manager;
 
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
