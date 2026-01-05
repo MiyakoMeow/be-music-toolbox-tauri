@@ -863,24 +863,6 @@ fn greet(name: &str) -> String {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // 调试信息：检查环境变量
-    #[cfg(debug_assertions)]
-    {
-        println!("=== Tauri Debug Info ===");
-        println!("CARGO_MANIFEST_DIR: {}", env!("CARGO_MANIFEST_DIR"));
-        println!();
-
-        // 检查配置文件是否存在
-        let config_path =
-            std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tauri.conf.json");
-        println!("Config path: {}", config_path.display());
-        println!("Config exists: {}", config_path.exists());
-        println!("========================");
-        println!();
-    }
-
-    // 尝试显式创建窗口
-
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .invoke_handler(tauri::generate_handler![greet])

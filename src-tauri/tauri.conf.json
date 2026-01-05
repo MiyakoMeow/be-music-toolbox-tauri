@@ -5,7 +5,6 @@
   "identifier": "io.github.miyakomeow.bms-resource-toolbox",
   "build": {
     "beforeDevCommand": "deno task dev",
-    "devUrl": "http://localhost:1420",
     "beforeBuildCommand": "deno task build",
     "frontendDist": "build"
   },
