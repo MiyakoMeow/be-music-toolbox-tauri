@@ -3,6 +3,9 @@ build/
 dist/
 .svelte-kit/
 
+# Rust构建输出
+target/
+
 # 依赖
 node_modules/
 .deno/
