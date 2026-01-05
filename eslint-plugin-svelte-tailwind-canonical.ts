@@ -111,6 +111,7 @@ const rule = {
   create(context: unknown) {
     const ctx = context as {
       options: unknown[];
+      getCwd?: () => string;
       getSourceCode: () => { ast: unknown; text: string };
       report: (input: {
         node: unknown;
@@ -125,11 +126,13 @@ const rule = {
     const rootFontSize = options.rootFontSize ?? 16;
 
     // 解析 CSS 文件路径
+    // 使用 context.getCwd() 而不是 process.cwd()，确保路径解析基于项目根目录
+    const cwd = ctx.getCwd ? ctx.getCwd() : process.cwd();
     let cssPath: string;
     if (path.isAbsolute(cssPathInput)) {
       cssPath = path.normalize(cssPathInput);
     } else {
-      cssPath = path.normalize(path.resolve(process.cwd(), cssPathInput));
+      cssPath = path.normalize(path.resolve(cwd, cssPathInput));
     }
     if (!fs.existsSync(cssPath)) {
       ctx.report({
