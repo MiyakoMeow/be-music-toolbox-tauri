@@ -36,7 +36,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
         with:
           workspaces: |
-            ./src-tauri -> target
+            . -> target
       - name: Check
         run: deno task check
       - name: Check lint
@@ -45,12 +45,12 @@ jobs:
         name: Check formatting
         run: deno task format
       - name: (Rust) Check
-        run: deno task rust:check --verbose
+        run: cargo check --verbose
       - name: (Rust) Clippy
-        run: deno task rust:clippy --verbose -- -D warnings
+        run: cargo clippy --verbose -- -D warnings
       - name: (Rust) Test
-        run: deno task rust:test --verbose
+        run: cargo test --verbose
       - name: (Rust) Format Check
-        run: deno task rust:fmt:check
+        run: cargo fmt --check
       - name: Build
         run: deno task build
