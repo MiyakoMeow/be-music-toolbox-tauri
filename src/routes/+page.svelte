@@ -15,14 +15,38 @@ async function greet(event: Event) {
   <h1 class="text-center">Welcome to Tauri + Svelte</h1>
 
   <div class="flex justify-center">
-    <a href="https://vite.dev" target="_blank" class="font-medium text-[#646cff] hover:text-[#535bf2] dark:hover:text-[#24c8db] no-underline">
-      <img src="/vite.svg" class="h-24 p-6 will-change-filter transition-[0.75s] hover:drop-shadow-[0_0_2em_#747bff]" alt="Vite Logo" />
+    <a
+      href="https://vite.dev"
+      target="_blank"
+      class="font-medium text-[#646cff] hover:text-[#535bf2] dark:hover:text-[#24c8db] no-underline"
+    >
+      <img
+        src="/vite.svg"
+        class="h-24 p-6 will-change-filter transition-[0.75s] hover:drop-shadow-[0_0_2em_#747bff]"
+        alt="Vite Logo"
+      />
     </a>
-    <a href="https://tauri.app" target="_blank" class="font-medium text-[#646cff] hover:text-[#535bf2] dark:hover:text-[#24c8db] no-underline">
-      <img src="/tauri.svg" class="h-24 p-6 will-change-filter transition-[0.75s] hover:drop-shadow-[0_0_2em_#24c8db]" alt="Tauri Logo" />
+    <a
+      href="https://tauri.app"
+      target="_blank"
+      class="font-medium text-[#646cff] hover:text-[#535bf2] dark:hover:text-[#24c8db] no-underline"
+    >
+      <img
+        src="/tauri.svg"
+        class="h-24 p-6 will-change-filter transition-[0.75s] hover:drop-shadow-[0_0_2em_#24c8db]"
+        alt="Tauri Logo"
+      />
     </a>
-    <a href="https://svelte.dev" target="_blank" class="font-medium text-[#646cff] hover:text-[#535bf2] dark:hover:text-[#24c8db] no-underline">
-      <img src="/svelte.svg" class="h-24 p-6 will-change-filter transition-[0.75s] hover:drop-shadow-[0_0_2em_#ff3e00]" alt="SvelteKit Logo" />
+    <a
+      href="https://svelte.dev"
+      target="_blank"
+      class="font-medium text-[#646cff] hover:text-[#535bf2] dark:hover:text-[#24c8db] no-underline"
+    >
+      <img
+        src="/svelte.svg"
+        class="h-24 p-6 will-change-filter transition-[0.75s] hover:drop-shadow-[0_0_2em_#ff3e00]"
+        alt="SvelteKit Logo"
+      />
     </a>
   </div>
   <p>Click on the Tauri, Vite, and SvelteKit logos to learn more.</p>
