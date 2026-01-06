@@ -7,4 +7,6 @@ const { children }: { children: Snippet } = $props();
 </script>
 
 <StarryBackground />
-{@render children()}
+<div class="content-layer">
+  {@render children()}
+</div>
