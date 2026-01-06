@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import autoprefixer from 'autoprefixer';
 import type { UserConfig } from 'vite';
 import process from 'node:process';
+import path from 'node:path';
 
 const host = process.env.TAURI_DEV_HOST ?? false;
 
@@ -12,6 +13,11 @@ const config: UserConfig = {
   css: {
     postcss: {
       plugins: [autoprefixer()],
+    },
+  },
+  resolve: {
+    alias: {
+      $lib: path.resolve(__dirname, './src/lib'),
     },
   },
 

@@ -14,6 +14,9 @@ const config: Config = {
       pages: 'build',
       assets: 'build',
     }),
+    alias: {
+      $lib: 'src/lib',
+    },
   },
 };
 
