@@ -52,7 +52,7 @@ const stars = Array.from({ length: 100 }, (_, i) => {
 
 <!-- 玻璃板内容容器 - 铺满整个窗口，添加明显边框 -->
 <div
-	class="fixed inset-0 z-50 m-0 overflow-hidden rounded-xl border-2 border-white/20 bg-white/[0.02] backdrop-blur-md shadow-2xl dark:border-white/20 dark:bg-white/[0.02]"
+	class="fixed inset-0 z-50 m-0 overflow-hidden rounded-xl border-2 border-white/20 bg-white/[0.02] backdrop-blur-[2px] shadow-2xl dark:border-white/20 dark:bg-white/[0.02]"
 >
 	{@render children()}
 </div>
