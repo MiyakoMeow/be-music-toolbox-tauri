@@ -6,7 +6,17 @@ import StarryBackground from '$lib/components/StarryBackground.svelte';
 const { children }: { children: Snippet } = $props();
 </script>
 
-<StarryBackground />
-<div class="content-layer">
-  {@render children()}
+<div class="layout-container">
+  <StarryBackground />
+  <div class="content-layer">
+    {@render children()}
+  </div>
 </div>
+
+<style>
+  .layout-container {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+  }
+</style>
