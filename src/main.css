@@ -167,7 +167,7 @@ body {
   width: var(--length);
   height: 2px;
   background: linear-gradient(
-    to right,
+    to left,
     rgba(255, 255, 255, 0.8) 0%,
     rgba(255, 255, 255, 0.4) 30%,
     rgba(255, 255, 255, 0.1) 70%,
@@ -232,7 +232,7 @@ body {
 
   .meteor::before {
     background: linear-gradient(
-      to right,
+      to left,
       rgba(100, 149, 237, 0.7) 0%,
       rgba(100, 149, 237, 0.3) 30%,
       rgba(100, 149, 237, 0.1) 70%,
