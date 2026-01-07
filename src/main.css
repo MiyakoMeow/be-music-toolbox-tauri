@@ -21,27 +21,147 @@
   --color-dark-bg-primary: #2f2f2f;
   --color-dark-bg-secondary: #0f0f0f98;
   --color-dark-bg-active: #0f0f0f69;
+
+  /* ========== 动画定义 ========== */
+
+  /* 星星闪烁动画 */
+  @keyframes twinkle {
+    0% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+  }
+
+  /* 星星随机漂浮动画 */
+  @keyframes float {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(var(--move-x), var(--move-y));
+    }
+    50% {
+      transform: translate(calc(var(--move-x) * -0.5), calc(var(--move-y) * 1.5));
+    }
+    75% {
+      transform: translate(calc(var(--move-x) * 0.5), calc(var(--move-y) * -0.5));
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  /* 流星飞行动画 */
+  @keyframes meteor-fly {
+    0% {
+      transform: translate(var(--start-x), var(--start-y)) rotate(var(--angle));
+      opacity: 1;
+    }
+    10% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 0.8;
+    }
+    100% {
+      transform: translate(calc(var(--start-x) + 100vw), calc(var(--start-y) + 100vh))
+        rotate(var(--angle));
+      opacity: 0;
+    }
+  }
 }
 
 /* 全局基础样式（替代 :root） */
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: transparent;
+}
+
 body {
+  margin: 0;
+  padding: 0;
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
   color: var(--color-text-primary);
-  background-color: var(--color-bg-primary);
+  background-color: transparent !important;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ========== 流星样式 ========== */
+
+/* 流星容器 */
+.meteor {
+  animation: meteor-fly var(--speed) linear forwards;
+}
+
+/* 流星拖尾 - 使用伪元素 */
+.meteor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--length);
+  height: 2px;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.4) 30%,
+    rgba(255, 255, 255, 0.1) 70%,
+    transparent 100%
+  );
+  transform-origin: right center;
+  border-radius: 2px;
+}
+
+/* ========== 浅色模式适配 ========== */
+
+@media (prefers-color-scheme: light) {
+  .meteor::before {
+    background: linear-gradient(
+      to left,
+      rgba(100, 149, 237, 0.7) 0%,
+      rgba(100, 149, 237, 0.3) 30%,
+      rgba(100, 149, 237, 0.1) 70%,
+      transparent 100%
+    );
+  }
+}
+
+/* ========== 性能优化和无障碍支持 ========== */
+
+/* 减少动画效果（尊重用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+  .meteor {
+    animation: none;
+  }
+
+  .star {
+    animation: twinkle var(--duration) ease-in-out infinite;
+  }
 }
 
 /* 深色模式 */
 @media (prefers-color-scheme: dark) {
   body {
     color: var(--color-dark-text-primary);
-    background-color: var(--color-dark-bg-primary);
+    background-color: transparent;
   }
 }
