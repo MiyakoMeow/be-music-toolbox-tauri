@@ -74,8 +74,12 @@ body {
   position: absolute;
   border-radius: 50%;
   background: white;
-  animation: twinkle var(--duration) ease-in-out infinite;
-  animation-delay: var(--delay);
+  animation:
+    twinkle var(--duration) ease-in-out infinite,
+    float var(--speed) ease-in-out infinite;
+  animation-delay:
+    var(--delay),
+    var(--move-delay);
   opacity: 1;
   /* 性能优化 */
   will-change: opacity, transform;
@@ -116,6 +120,88 @@ body {
   }
 }
 
+/* 星星随机漂浮动画 */
+@keyframes float {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(var(--move-x), var(--move-y));
+  }
+  50% {
+    transform: translate(calc(var(--move-x) * -0.5), calc(var(--move-y) * 1.5));
+  }
+  75% {
+    transform: translate(calc(var(--move-x) * 0.5), calc(var(--move-y) * -0.5));
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ========== 流星样式 ========== */
+
+/* 流星容器 */
+.meteor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow:
+    0 0 6px 2px rgba(255, 255, 255, 0.8),
+    0 0 15px 5px rgba(255, 255, 255, 0.5);
+  animation: meteor-fly var(--speed) linear forwards;
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+/* 流星拖尾 - 使用伪元素 */
+.meteor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--length);
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 0.4) 30%,
+    rgba(255, 255, 255, 0.1) 70%,
+    transparent 100%
+  );
+  transform-origin: right center;
+  border-radius: 2px;
+}
+
+/* 流星飞行动画 */
+@keyframes meteor-fly {
+  0% {
+    transform:
+      translate(var(--start-x), var(--start-y))
+      rotate(var(--angle));
+    opacity: 1;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.8;
+  }
+  100% {
+    transform:
+      translate(
+        calc(var(--start-x) + 100vw),
+        calc(var(--start-y) + 100vh)
+      )
+      rotate(var(--angle));
+    opacity: 0;
+  }
+}
+
 /* ========== 浅色模式适配 ========== */
 
 @media (prefers-color-scheme: light) {
@@ -136,15 +222,35 @@ body {
   .star-lg {
     box-shadow: 0 0 6px rgba(100, 149, 237, 0.5);
   }
+
+  .meteor {
+    background: rgba(100, 149, 237, 0.9);
+    box-shadow:
+      0 0 6px 2px rgba(100, 149, 237, 0.6),
+      0 0 15px 5px rgba(100, 149, 237, 0.3);
+  }
+
+  .meteor::before {
+    background: linear-gradient(
+      to right,
+      rgba(100, 149, 237, 0.7) 0%,
+      rgba(100, 149, 237, 0.3) 30%,
+      rgba(100, 149, 237, 0.1) 70%,
+      transparent 100%
+    );
+  }
 }
 
 /* ========== 性能优化和无障碍支持 ========== */
 
 /* 减少动画效果（尊重用户偏好） */
 @media (prefers-reduced-motion: reduce) {
-  .star {
+  .meteor {
     animation: none;
-    opacity: 0.8;
+  }
+
+  .star {
+    animation: twinkle var(--duration) ease-in-out infinite;
   }
 }
 

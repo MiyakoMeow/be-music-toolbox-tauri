@@ -25,9 +25,46 @@ const stars = Array.from({ length: 100 }, (_, i) => {
 		top: Math.random() * 100,
 		sizeClass,
 		duration,
-		delay
+		delay,
+		moveX: (Math.random() - 0.5) * 100, // -50到50px
+		moveY: (Math.random() - 0.5) * 100, // -50到50px
+		speed: 20 + Math.random() * 20, // 20-40秒
+		moveDelay: Math.random() * 5 // 0-5秒
 	};
 });
+
+// 流星状态
+let meteors = $state([]);
+
+// 生成流星函数
+function createMeteor() {
+	const meteor = {
+		id: Date.now() + Math.random(),
+		startX: Math.random() * 100, // 0-100%
+		startY: Math.random() * 30, // 0-30%（从屏幕上半部分开始）
+		angle: Math.random() * 30 + 30, // 30-60度（对角线）
+		speed: 1 + Math.random() * 1.5, // 1-2.5秒
+		length: 100 + Math.random() * 150 // 拖尾长度 100-250px
+	};
+	meteors = [...meteors, meteor];
+
+	// 动画结束后移除流星
+	setTimeout(() => {
+		meteors = meteors.filter((m) => m.id !== meteor.id);
+	}, meteor.speed * 1000);
+}
+
+// 定时生成流星（2-5秒间隔）
+function scheduleMeteor() {
+	const delay = 2000 + Math.random() * 3000;
+	setTimeout(() => {
+		createMeteor();
+		scheduleMeteor();
+	}, delay);
+}
+
+// 启动流星生成
+scheduleMeteor();
 </script>
 
 <svelte:head>
@@ -44,7 +81,22 @@ const stars = Array.from({ length: 100 }, (_, i) => {
 	{#each stars as star (star.id)}
 		<div
 			class="star {star.sizeClass}"
-			style="left: {star.left}%; top: {star.top}%; --duration: {star.duration}s; --delay: {star.delay}s;"
+			style="left: {star.left}%; top: {star.top}%; --duration: {star.duration}s; --delay: {star.delay}s; --move-x: {star.moveX}px; --move-y: {star.moveY}px; --speed: {star.speed}s; --move-delay: {star.moveDelay}s;"
+			aria-hidden="true"
+		></div>
+	{/each}
+
+	<!-- 流星 -->
+	{#each meteors as meteor (meteor.id)}
+		<div
+			class="meteor"
+			style="
+				--start-x: {meteor.startX}%;
+				--start-y: {meteor.startY}%;
+				--angle: {meteor.angle}deg;
+				--speed: {meteor.speed}s;
+				--length: {meteor.length}px;
+			"
 			aria-hidden="true"
 		></div>
 	{/each}
