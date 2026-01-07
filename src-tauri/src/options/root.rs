@@ -176,3 +176,80 @@ pub async fn scan_folder_similar_folders(
 
     Ok(print_tasks)
 }
+
+// Tauri commands
+
+use std::path::PathBuf;
+
+use crate::fs::moving::ReplacePreset;
+use crate::options::work::BmsFolderSetNameType;
+
+/// Set directory name based on BMS file (root level)
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_set_name_by_bms(
+    dir: String,
+    set_type: BmsFolderSetNameType,
+    dry_run: bool,
+    replace: ReplacePreset,
+    skip_already_formatted: bool,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    set_name_by_bms(&path, set_type, dry_run, replace, skip_already_formatted)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Undo directory name setting (root level)
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_undo_set_name_by_bms(
+    dir: String,
+    set_type: BmsFolderSetNameType,
+    dry_run: bool,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    undo_set_name_by_bms(&path, set_type, dry_run)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Copy numbered work directory names
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_copy_numbered_workdir_names(
+    from: String,
+    to: String,
+    dry_run: bool,
+) -> Result<(), String> {
+    let from_path = PathBuf::from(from);
+    let to_path = PathBuf::from(to);
+    copy_numbered_workdir_names(&from_path, &to_path, dry_run)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Scan similar folders
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_scan_folder_similar_folders(
+    dir: String,
+    similarity: f64,
+) -> Result<Vec<(String, String, f64)>, String> {
+    let path = PathBuf::from(dir);
+    scan_folder_similar_folders(&path, similarity)
+        .await
+        .map_err(|e| e.to_string())
+}

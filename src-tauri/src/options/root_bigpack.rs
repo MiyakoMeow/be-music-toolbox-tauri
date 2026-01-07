@@ -898,3 +898,128 @@ mod tests {
         assert_eq!(all_rules.len(), 3);
     }
 }
+
+// Tauri commands
+
+use std::path::PathBuf;
+
+use crate::options::work::BmsFolderSetNameType;
+
+/// Split folders by first character
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_split_folders_with_first_char(dir: String, dry_run: bool) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    split_folders_with_first_char(&path, dry_run)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Undo split pack
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_undo_split_pack(
+    dir: String,
+    dry_run: bool,
+    replace: ReplacePreset,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    undo_split_pack(&path, dry_run, replace)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Merge split folders
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_merge_split_folders(
+    dir: String,
+    dry_run: bool,
+    replace: ReplacePreset,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    merge_split_folders(&path, dry_run, replace)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Move works in pack
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_move_works_in_pack(
+    from: String,
+    to: String,
+    dry_run: bool,
+    replace: ReplacePreset,
+) -> Result<(), String> {
+    let from_path = PathBuf::from(from);
+    let to_path = PathBuf::from(to);
+    move_works_in_pack(&from_path, &to_path, dry_run, replace)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Move out works
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_move_out_works(
+    dir: String,
+    dry_run: bool,
+    replace: ReplacePreset,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    move_out_works(&path, dry_run, replace)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Move works with same name
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_move_works_with_same_name(
+    from: String,
+    to: String,
+    dry_run: bool,
+    replace: ReplacePreset,
+) -> Result<(), String> {
+    let from_path = PathBuf::from(from);
+    let to_path = PathBuf::from(to);
+    move_works_with_same_name(&from_path, &to_path, dry_run, replace)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Remove unnecessary media files
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn root_remove_unneed_media_files(
+    dir: String,
+    rule: RemoveMediaPreset,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    let rule_config = get_remove_media_rule_by_preset(rule);
+    remove_unneed_media_files(&path, rule_config)
+        .await
+        .map_err(|e| e.to_string())
+}

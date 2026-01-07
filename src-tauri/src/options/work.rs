@@ -14,7 +14,9 @@ use crate::{
 pub const DEFAULT_TITLE: &str = "!!! UnknownTitle !!!";
 pub const DEFAULT_ARTIST: &str = "!!! UnknownArtist !!!";
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
+#[derive(
+    Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, specta::Type,
+)]
 pub enum BmsFolderSetNameType {
     /// Suitable for cases where you want to directly replace directory name with "Title [Artist]"
     ReplaceTitleArtist = 0,
@@ -309,4 +311,59 @@ pub async fn remove_zero_sized_media_files(
     }
 
     Ok(())
+}
+
+// Tauri commands
+
+use std::path::PathBuf;
+
+use crate::fs::moving::ReplacePreset;
+
+/// Set directory name based on BMS file
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn work_set_name_by_bms(
+    dir: String,
+    set_type: BmsFolderSetNameType,
+    dry_run: bool,
+    replace: ReplacePreset,
+    skip_already_formatted: bool,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    set_name_by_bms(&path, set_type, dry_run, replace, skip_already_formatted)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Undo directory name setting
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn work_undo_set_name_by_bms(
+    dir: String,
+    set_type: BmsFolderSetNameType,
+    dry_run: bool,
+) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    undo_set_name_by_bms(&path, set_type, dry_run)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Remove zero-byte media files
+///
+/// # Errors
+///
+/// Returns an error if directory operations fail
+#[tauri::command]
+pub async fn work_remove_zero_sized_media_files(dir: String, dry_run: bool) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    remove_zero_sized_media_files(&path, dry_run)
+        .await
+        .map_err(|e| e.to_string())
 }

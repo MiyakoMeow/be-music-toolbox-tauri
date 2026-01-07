@@ -47,7 +47,7 @@ async fn remove_empty_folder(parent_dir: &Path) -> io::Result<()> {
 /// # Errors
 ///
 /// Returns an error if audio processing or file operations fail
-pub async fn pack_raw_to_hq(root_dir: impl AsRef<Path>) -> io::Result<()> {
+pub async fn pack_raw_to_hq_impl(root_dir: impl AsRef<Path>) -> io::Result<()> {
     let root_dir = root_dir.as_ref();
 
     // Parse Audio
@@ -75,7 +75,7 @@ pub async fn pack_raw_to_hq(root_dir: impl AsRef<Path>) -> io::Result<()> {
 /// # Errors
 ///
 /// Returns an error if audio/video processing or file operations fail
-pub async fn pack_hq_to_lq(root_dir: impl AsRef<Path>) -> io::Result<()> {
+pub async fn pack_hq_to_lq_impl(root_dir: impl AsRef<Path>) -> io::Result<()> {
     let root_dir = root_dir.as_ref();
 
     // Parse Audio
@@ -147,7 +147,7 @@ fn pack_setup_rawpack_to_hq_check(pack_dir: &Path, root_dir: &Path) -> bool {
 /// # Errors
 ///
 /// Returns an error if pack processing or file operations fail
-pub async fn pack_setup_rawpack_to_hq(
+pub async fn pack_setup_rawpack_to_hq_impl(
     pack_dir: impl AsRef<Path>,
     root_dir: impl AsRef<Path>,
 ) -> io::Result<()> {
@@ -268,7 +268,7 @@ fn pack_update_rawpack_to_hq_check(pack_dir: &Path, root_dir: &Path, sync_dir: &
 /// # Errors
 ///
 /// Returns an error if pack processing or file operations fail
-pub async fn pack_update_rawpack_to_hq(
+pub async fn pack_update_rawpack_to_hq_impl(
     pack_dir: impl AsRef<Path>,
     root_dir: impl AsRef<Path>,
     sync_dir: impl AsRef<Path>,
@@ -423,4 +423,63 @@ mod tests {
             "Function should complete without panicking"
         );
     }
+}
+
+// Tauri commands
+
+use std::path::PathBuf;
+
+/// Raw pack -> HQ pack
+///
+/// # Errors
+///
+/// Returns an error if pack processing fails
+#[tauri::command]
+pub async fn pack_raw_to_hq(dir: String) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    pack_raw_to_hq_impl(&path).await.map_err(|e| e.to_string())
+}
+
+/// HQ pack -> LQ pack
+///
+/// # Errors
+///
+/// Returns an error if pack processing fails
+#[tauri::command]
+pub async fn pack_hq_to_lq(dir: String) -> Result<(), String> {
+    let path = PathBuf::from(dir);
+    pack_hq_to_lq_impl(&path).await.map_err(|e| e.to_string())
+}
+
+/// Pack generation script: Raw pack -> HQ pack
+///
+/// # Errors
+///
+/// Returns an error if pack processing fails
+#[tauri::command]
+pub async fn pack_setup_rawpack_to_hq(pack_dir: String, root_dir: String) -> Result<(), String> {
+    let pack_path = PathBuf::from(pack_dir);
+    let root_path = PathBuf::from(root_dir);
+    pack_setup_rawpack_to_hq_impl(&pack_path, &root_path)
+        .await
+        .map_err(|e| e.to_string())
+}
+
+/// Pack update script: Raw pack -> HQ pack
+///
+/// # Errors
+///
+/// Returns an error if pack processing fails
+#[tauri::command]
+pub async fn pack_update_rawpack_to_hq(
+    pack_dir: String,
+    root_dir: String,
+    sync_dir: String,
+) -> Result<(), String> {
+    let pack_path = PathBuf::from(pack_dir);
+    let root_path = PathBuf::from(root_dir);
+    let sync_path = PathBuf::from(sync_dir);
+    pack_update_rawpack_to_hq_impl(&pack_path, &root_path, &sync_path)
+        .await
+        .map_err(|e| e.to_string())
 }

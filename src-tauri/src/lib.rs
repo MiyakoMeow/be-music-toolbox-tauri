@@ -1,7 +1,9 @@
 #![recursion_limit = "512"]
 
+// specta 导出
+pub use specta::specta;
+
 pub mod bms;
-pub mod commands;
 pub mod fs;
 pub mod media;
 pub mod options;
@@ -22,48 +24,48 @@ pub fn run() -> Result<(), tauri::Error> {
             .plugin(tauri_plugin_opener::init())
             .invoke_handler(tauri::generate_handler![
                 // BMS commands
-                commands::bms_parse_bms_file,
-                commands::bms_parse_bmson_file,
-                commands::bms_get_dir_bms_list,
-                commands::bms_get_dir_bms_info,
-                commands::bms_is_work_dir,
-                commands::bms_is_root_dir,
+                options::bms::parse_bms_file,
+                options::bms::parse_bmson_file,
+                options::bms::get_dir_bms_list,
+                options::bms::get_dir_bms_info,
+                options::bms::is_work_dir,
+                options::bms::is_root_dir,
                 // FS commands
-                commands::fs_is_file_same_content,
-                commands::fs_is_dir_having_file,
-                commands::fs_remove_empty_folders,
-                commands::fs_bms_dir_similarity,
+                options::fs::is_file_same_content,
+                options::fs::is_dir_having_file,
+                options::fs::remove_empty_folders,
+                options::fs::bms_dir_similarity,
                 // Work commands
-                commands::work_set_name_by_bms,
-                commands::work_undo_set_name_by_bms,
-                commands::work_remove_zero_sized_media_files,
+                options::work::work_set_name_by_bms,
+                options::work::work_undo_set_name_by_bms,
+                options::work::work_remove_zero_sized_media_files,
                 // Root commands
-                commands::root_set_name_by_bms,
-                commands::root_undo_set_name_by_bms,
-                commands::root_copy_numbered_workdir_names,
-                commands::root_scan_folder_similar_folders,
-                commands::root_split_folders_with_first_char,
-                commands::root_undo_split_pack,
-                commands::root_merge_split_folders,
-                commands::root_move_works_in_pack,
-                commands::root_move_out_works,
-                commands::root_move_works_with_same_name,
-                commands::root_remove_unneed_media_files,
+                options::root::root_set_name_by_bms,
+                options::root::root_undo_set_name_by_bms,
+                options::root::root_copy_numbered_workdir_names,
+                options::root::root_scan_folder_similar_folders,
+                options::root_bigpack::root_split_folders_with_first_char,
+                options::root_bigpack::root_undo_split_pack,
+                options::root_bigpack::root_merge_split_folders,
+                options::root_bigpack::root_move_works_in_pack,
+                options::root_bigpack::root_move_out_works,
+                options::root_bigpack::root_move_works_with_same_name,
+                options::root_bigpack::root_remove_unneed_media_files,
                 // Pack commands
-                commands::pack_raw_to_hq,
-                commands::pack_hq_to_lq,
-                commands::pack_setup_rawpack_to_hq,
-                commands::pack_update_rawpack_to_hq,
+                options::pack::pack_raw_to_hq,
+                options::pack::pack_hq_to_lq,
+                options::pack::pack_setup_rawpack_to_hq,
+                options::pack::pack_update_rawpack_to_hq,
                 // Rawpack commands
-                commands::rawpack_unzip_numeric_to_bms_folder,
-                commands::rawpack_unzip_with_name_to_bms_folder,
+                options::rawpack::rawpack_unzip_numeric_to_bms_folder,
+                options::rawpack::rawpack_unzip_with_name_to_bms_folder,
                 // Root event commands
-                commands::root_event_check_num_folder,
-                commands::root_event_create_num_folders,
-                commands::root_event_generate_work_info_table,
+                options::root_event::root_event_check_num_folder,
+                options::root_event::root_event_create_num_folders,
+                options::root_event::root_event_generate_work_info_table,
                 // BMS event commands
-                commands::bms_event_open_list,
-                commands::bms_event_open_event_works,
+                options::bms_event::bms_event_open_list,
+                options::bms_event::bms_event_open_event_works,
             ])
             .setup(|_app| {
                 #[cfg(debug_assertions)]
