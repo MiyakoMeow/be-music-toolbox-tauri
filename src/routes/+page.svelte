@@ -11,94 +11,110 @@ async function greet(event: Event) {
 }
 </script>
 
-<main class="m-0 flex flex-col justify-center pt-[10vh] text-center">
-  <h1 class="text-center">Welcome to Tauri + Svelte</h1>
+<main class="flex h-full flex-col items-center justify-center p-8 text-center">
+	<h1 class="text-center text-2xl font-bold dark:text-white">
+		Welcome to Tauri + Svelte
+	</h1>
 
-  <div class="flex justify-center">
-    <a
-      href="https://vite.dev"
-      target="_blank"
-      class="
+	<div class="flex justify-center">
+		<a
+			href="https://vite.dev"
+			target="_blank"
+			class="
         text-link hover:text-link-hover font-medium
         no-underline
         dark:hover:text-[#24c8db]
+        transition-transform hover:scale-110
       "
-    >
-      <img
-        src="/vite.svg"
-        class="
+		>
+			<img
+				src="/vite.svg"
+				class="
           h-24 p-6 transition-[0.75s]
           hover:drop-shadow-[0_0_2em_#747bff]
         "
-        alt="Vite Logo"
-      />
-    </a>
-    <a
-      href="https://tauri.app"
-      target="_blank"
-      class="
+				alt="Vite Logo"
+			/>
+		</a>
+		<a
+			href="https://tauri.app"
+			target="_blank"
+			class="
         text-link hover:text-link-hover font-medium
         no-underline
         dark:hover:text-[#24c8db]
+        transition-transform hover:scale-110
       "
-    >
-      <img
-        src="/tauri.svg"
-        class="
+		>
+			<img
+				src="/tauri.svg"
+				class="
           h-24 p-6 transition-[0.75s]
           hover:drop-shadow-[0_0_2em_#24c8db]
         "
-        alt="Tauri Logo"
-      />
-    </a>
-    <a
-      href="https://svelte.dev"
-      target="_blank"
-      class="
+				alt="Tauri Logo"
+			/>
+		</a>
+		<a
+			href="https://svelte.dev"
+			target="_blank"
+			class="
         text-link hover:text-link-hover font-medium
         no-underline
-        dark:hover:text-[#24c8db]
+        dark:hover:text-[#ff3e00]
+        transition-transform hover:scale-110
       "
-    >
-      <img
-        src="/svelte.svg"
-        class="
+		>
+			<img
+				src="/svelte.svg"
+				class="
           h-24 p-6 transition-[0.75s]
           hover:drop-shadow-[0_0_2em_#ff3e00]
         "
-        alt="SvelteKit Logo"
-      />
-    </a>
-  </div>
-  <p>Click on the Tauri, Vite, and SvelteKit logos to learn more.</p>
+				alt="SvelteKit Logo"
+			/>
+		</a>
+	</div>
 
-  <form class="flex justify-center" onsubmit={greet}>
-    <input
-      id="greet-input"
-      placeholder="Enter a name..."
-      bind:value={name}
-      class="
-        text-text-primary dark:bg-dark-bg-secondary mr-1.25 rounded-lg border border-transparent
-        bg-white px-[1.2em] py-[0.6em] text-base
+	<p class="mb-6 text-sm opacity-90 dark:text-gray-300">
+		Click on the Tauri, Vite, and SvelteKit logos to learn more.
+	</p>
+
+	<form class="flex justify-center gap-2" onsubmit={greet}>
+		<input
+			id="greet-input"
+			placeholder="Enter a name..."
+			bind:value={name}
+			class="
+        text-text-primary dark:bg-dark-bg-secondary rounded-lg border border-transparent
+        bg-white/80 px-[1.2em] py-[0.6em] text-base
         font-medium shadow-[0_2px_2px_rgba(0,0,0,0.2)]
         transition-[border-color_0.25s]
-        outline-none dark:text-white
+        outline-none backdrop-blur-sm dark:text-white
+        dark:bg-white/10
       "
-    />
-    <button
-      type="submit"
-      class="
+		/>
+		<button
+			type="submit"
+			class="
         text-text-primary hover:border-border-focus active:border-border-focus active:bg-bg-active dark:bg-dark-bg-secondary dark:active:bg-dark-bg-active
         cursor-pointer rounded-lg border border-transparent
-        bg-white px-[1.2em]
+        bg-white/80 px-[1.2em]
         py-[0.6em]
         text-base
         font-medium shadow-[0_2px_2px_rgba(0,0,0,0.2)]
         transition-[border-color_0.25s] outline-none dark:text-white
+        backdrop-blur-sm
+        dark:bg-white/10
       "
-    >
-      Greet
-    </button>
-  </form>
-  <p>{greetMsg}</p>
+		>
+			Greet
+		</button>
+	</form>
+
+	{#if greetMsg}
+		<p class="mt-4 rounded-lg bg-white/20 p-4 backdrop-blur-sm dark:bg-white/10">
+			{greetMsg}
+		</p>
+	{/if}
 </main>
