@@ -8,7 +8,7 @@ use bms_rs::bms::prelude::{Bms, BmsOutput};
 ///
 /// Returns an error if file reading or parsing fails
 #[tauri::command]
-pub async fn bms_parse_bms_file(file: String) -> Result<BmsOutput, String> {
+pub async fn parse_bms_file(file: String) -> Result<BmsOutput, String> {
     let path = PathBuf::from(file);
     crate::bms::parse_bms_file(&path)
         .await
@@ -21,7 +21,7 @@ pub async fn bms_parse_bms_file(file: String) -> Result<BmsOutput, String> {
 ///
 /// Returns an error if file reading or parsing fails
 #[tauri::command]
-pub async fn bms_parse_bmson_file(file: String) -> Result<BmsOutput, String> {
+pub async fn parse_bmson_file(file: String) -> Result<BmsOutput, String> {
     let path = PathBuf::from(file);
     crate::bms::parse_bmson_file(&path)
         .await
@@ -34,7 +34,7 @@ pub async fn bms_parse_bmson_file(file: String) -> Result<BmsOutput, String> {
 ///
 /// Returns an error if directory reading or file parsing fails
 #[tauri::command]
-pub async fn bms_get_dir_bms_list(dir: String) -> Result<Vec<BmsOutput>, String> {
+pub async fn get_dir_bms_list(dir: String) -> Result<Vec<BmsOutput>, String> {
     let path = PathBuf::from(dir);
     crate::bms::get_dir_bms_list(&path)
         .await
@@ -47,7 +47,7 @@ pub async fn bms_get_dir_bms_list(dir: String) -> Result<Vec<BmsOutput>, String>
 ///
 /// Returns an error if directory reading or file parsing fails
 #[tauri::command]
-pub async fn bms_get_dir_bms_info(dir: String) -> Result<Option<Bms>, String> {
+pub async fn get_dir_bms_info(dir: String) -> Result<Option<Bms>, String> {
     let path = PathBuf::from(dir);
     crate::bms::get_dir_bms_info(&path)
         .await
@@ -60,7 +60,7 @@ pub async fn bms_get_dir_bms_info(dir: String) -> Result<Option<Bms>, String> {
 ///
 /// Returns an error if directory access fails
 #[tauri::command]
-pub async fn bms_is_work_dir(dir: String) -> Result<bool, String> {
+pub async fn is_work_dir(dir: String) -> Result<bool, String> {
     let path = PathBuf::from(dir);
     crate::bms::is_work_dir(&path)
         .await
@@ -73,7 +73,7 @@ pub async fn bms_is_work_dir(dir: String) -> Result<bool, String> {
 ///
 /// Returns an error if directory access fails
 #[tauri::command]
-pub async fn bms_is_root_dir(dir: String) -> Result<bool, String> {
+pub async fn is_root_dir(dir: String) -> Result<bool, String> {
     let path = PathBuf::from(dir);
     crate::bms::is_root_dir(&path)
         .await
