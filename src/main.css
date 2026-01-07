@@ -62,9 +62,7 @@
   /* 流星飞行动画 */
   @keyframes meteor-fly {
     0% {
-      transform:
-        translate(var(--start-x), var(--start-y))
-        rotate(var(--angle));
+      transform: translate(var(--start-x), var(--start-y)) rotate(var(--angle));
       opacity: 1;
     }
     10% {
@@ -74,11 +72,7 @@
       opacity: 0.8;
     }
     100% {
-      transform:
-        translate(
-          calc(var(--start-x) + 100vw),
-          calc(var(--start-y) + 100vh)
-        )
+      transform: translate(calc(var(--start-x) + 100vw), calc(var(--start-y) + 100vh))
         rotate(var(--angle));
       opacity: 0;
     }
