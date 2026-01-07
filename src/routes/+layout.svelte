@@ -7,23 +7,25 @@ const { children }: { children: Snippet } = $props();
 // 生成随机星星位置
 const stars = Array.from({ length: 100 }, (_, i) => {
 	const size = Math.random();
-	let sizeClass = 'star-sm';
+	let sizeClasses = '';
 	let duration = 2 + Math.random() * 3;
 	let delay = Math.random() * 5;
 
 	if (size > 0.7) {
-		sizeClass = 'star-lg';
+		sizeClasses = 'w-[5px] h-[5px] shadow-[0_0_8px_rgba(255,255,255,1)] light:shadow-[0_0_6px_rgba(100,149,237,0.5)]';
 		duration = 3 + Math.random() * 4;
 	} else if (size > 0.4) {
-		sizeClass = 'star-md';
+		sizeClasses = 'w-[4px] h-[4px]';
 		duration = 2.5 + Math.random() * 3.5;
+	} else {
+		sizeClasses = 'w-[3px] h-[3px]';
 	}
 
 	return {
 		id: i,
 		left: Math.random() * 100,
 		top: Math.random() * 100,
-		sizeClass,
+		sizeClasses,
 		duration,
 		delay,
 		moveX: (Math.random() - 0.5) * 100, // -50到50px
@@ -77,11 +79,11 @@ scheduleMeteor();
 </svelte:head>
 
 <!-- 星空背景层 -->
-<div class="starry-background">
+<div class="fixed inset-0 z-0 overflow-hidden bg-[linear-gradient(to_bottom,#0a0e27_0%,#1a1a3e_50%,#0d0d1a_100%)] light:bg-[linear-gradient(to_bottom,#e8f4fc_0%,#d4e9f7_50%,#c5dff0_100%)]">
 	{#each stars as star (star.id)}
 		<div
-			class="star {star.sizeClass}"
-			style="left: {star.left}%; top: {star.top}%; --duration: {star.duration}s; --delay: {star.delay}s; --move-x: {star.moveX}px; --move-y: {star.moveY}px; --speed: {star.speed}s; --move-delay: {star.moveDelay}s;"
+			class="absolute rounded-full bg-white opacity-100 will-change-[opacity,transform] light:bg-[rgba(100,149,237,0.6)] {star.sizeClasses}"
+			style="left: {star.left}%; top: {star.top}%; --duration: {star.duration}s; --delay: {star.delay}s; --move-x: {star.moveX}px; --move-y: {star.moveY}px; --speed: {star.speed}s; --move-delay: {star.moveDelay}s; animation: twinkle var(--duration) ease-in-out infinite, float var(--speed) ease-in-out infinite; animation-delay: var(--delay), var(--move-delay);"
 			aria-hidden="true"
 		></div>
 	{/each}
@@ -89,13 +91,14 @@ scheduleMeteor();
 	<!-- 流星 -->
 	{#each meteors as meteor (meteor.id)}
 		<div
-			class="meteor"
+			class="meteor absolute top-0 left-0 z-1 w-[2px] h-[2px] rounded-full bg-white shadow-[0_0_6px_2px_rgba(255,255,255,0.8),0_0_15px_5px_rgba(255,255,255,0.5)] light:bg-[rgba(100,149,237,0.9)] light:shadow-[0_0_6px_2px_rgba(100,149,237,0.6),0_0_15px_5px_rgba(100,149,237,0.3)] will-change-[transform,opacity]"
 			style="
 				--start-x: {meteor.startX}%;
 				--start-y: {meteor.startY}%;
 				--angle: {meteor.angle}deg;
 				--speed: {meteor.speed}s;
 				--length: {meteor.length}px;
+				animation: meteor-fly var(--speed) linear forwards;
 			"
 			aria-hidden="true"
 		></div>

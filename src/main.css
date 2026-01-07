@@ -21,6 +21,68 @@
   --color-dark-bg-primary: #2f2f2f;
   --color-dark-bg-secondary: #0f0f0f98;
   --color-dark-bg-active: #0f0f0f69;
+
+  /* ========== 动画定义 ========== */
+
+  /* 星星闪烁动画 */
+  @keyframes twinkle {
+    0% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 0.2;
+      transform: scale(0.8);
+    }
+  }
+
+  /* 星星随机漂浮动画 */
+  @keyframes float {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(var(--move-x), var(--move-y));
+    }
+    50% {
+      transform: translate(calc(var(--move-x) * -0.5), calc(var(--move-y) * 1.5));
+    }
+    75% {
+      transform: translate(calc(var(--move-x) * 0.5), calc(var(--move-y) * -0.5));
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  /* 流星飞行动画 */
+  @keyframes meteor-fly {
+    0% {
+      transform:
+        translate(var(--start-x), var(--start-y))
+        rotate(var(--angle));
+      opacity: 1;
+    }
+    10% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 0.8;
+    }
+    100% {
+      transform:
+        translate(
+          calc(var(--start-x) + 100vw),
+          calc(var(--start-y) + 100vh)
+        )
+        rotate(var(--angle));
+      opacity: 0;
+    }
+  }
 }
 
 /* 全局基础样式（替代 :root） */
@@ -49,114 +111,7 @@ body {
   overflow: hidden;
 }
 
-/* ========== 星空背景样式 ========== */
-
-/* 星空背景容器 */
-.starry-background {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  z-index: 0 !important;
-  overflow: hidden;
-  /* 深蓝到黑色的渐变背景 */
-  background: linear-gradient(
-    to bottom,
-    #0a0e27 0%,
-    #1a1a3e 50%,
-    #0d0d1a 100%
-  ) !important;
-}
-
-/* 星星基础样式 */
-.star {
-  position: absolute;
-  border-radius: 50%;
-  background: white;
-  animation:
-    twinkle var(--duration) ease-in-out infinite,
-    float var(--speed) ease-in-out infinite;
-  animation-delay:
-    var(--delay),
-    var(--move-delay);
-  opacity: 1;
-  /* 性能优化 */
-  will-change: opacity, transform;
-}
-
-/* 小星星 */
-.star-sm {
-  width: 3px;
-  height: 3px;
-}
-
-/* 中星星 */
-.star-md {
-  width: 4px;
-  height: 4px;
-}
-
-/* 大星星 */
-.star-lg {
-  width: 5px;
-  height: 5px;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 1);
-}
-
-/* 星星闪烁动画 */
-@keyframes twinkle {
-  0% {
-    opacity: 0.2;
-    transform: scale(0.8);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-  100% {
-    opacity: 0.2;
-    transform: scale(0.8);
-  }
-}
-
-/* 星星随机漂浮动画 */
-@keyframes float {
-  0% {
-    transform: translate(0, 0);
-  }
-  25% {
-    transform: translate(var(--move-x), var(--move-y));
-  }
-  50% {
-    transform: translate(calc(var(--move-x) * -0.5), calc(var(--move-y) * 1.5));
-  }
-  75% {
-    transform: translate(calc(var(--move-x) * 0.5), calc(var(--move-y) * -0.5));
-  }
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-/* ========== 流星样式 ========== */
-
-/* 流星容器 */
-.meteor {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2px;
-  height: 2px;
-  background: white;
-  border-radius: 50%;
-  box-shadow:
-    0 0 6px 2px rgba(255, 255, 255, 0.8),
-    0 0 15px 5px rgba(255, 255, 255, 0.5);
-  animation: meteor-fly var(--speed) linear forwards;
-  will-change: transform, opacity;
-  z-index: 1;
-}
+/* ========== 流星拖尾样式 ========== */
 
 /* 流星拖尾 - 使用伪元素 */
 .meteor::before {
@@ -177,59 +132,9 @@ body {
   border-radius: 2px;
 }
 
-/* 流星飞行动画 */
-@keyframes meteor-fly {
-  0% {
-    transform:
-      translate(var(--start-x), var(--start-y))
-      rotate(var(--angle));
-    opacity: 1;
-  }
-  10% {
-    opacity: 1;
-  }
-  70% {
-    opacity: 0.8;
-  }
-  100% {
-    transform:
-      translate(
-        calc(var(--start-x) + 100vw),
-        calc(var(--start-y) + 100vh)
-      )
-      rotate(var(--angle));
-    opacity: 0;
-  }
-}
-
 /* ========== 浅色模式适配 ========== */
 
 @media (prefers-color-scheme: light) {
-  .starry-background {
-    /* 浅色模式使用更柔和的渐变 */
-    background: linear-gradient(
-      to bottom,
-      #e8f4fc 0%,
-      #d4e9f7 50%,
-      #c5dff0 100%
-    );
-  }
-
-  .star {
-    background: rgba(100, 149, 237, 0.6);
-  }
-
-  .star-lg {
-    box-shadow: 0 0 6px rgba(100, 149, 237, 0.5);
-  }
-
-  .meteor {
-    background: rgba(100, 149, 237, 0.9);
-    box-shadow:
-      0 0 6px 2px rgba(100, 149, 237, 0.6),
-      0 0 15px 5px rgba(100, 149, 237, 0.3);
-  }
-
   .meteor::before {
     background: linear-gradient(
       to left,
