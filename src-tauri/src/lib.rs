@@ -1,8 +1,5 @@
 #![recursion_limit = "512"]
 
-// specta 导出
-pub use specta::specta;
-
 pub mod bms;
 pub mod fs;
 pub mod media;

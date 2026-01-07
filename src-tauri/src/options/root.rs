@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use log::info;
 use strsim::jaro_winkler;
@@ -178,11 +178,6 @@ pub async fn scan_folder_similar_folders(
 }
 
 // Tauri commands
-
-use std::path::PathBuf;
-
-use crate::fs::moving::ReplacePreset;
-use crate::options::work::BmsFolderSetNameType;
 
 /// Set directory name based on BMS file (root level)
 ///

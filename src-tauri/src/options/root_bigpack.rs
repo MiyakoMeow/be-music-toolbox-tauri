@@ -1,6 +1,6 @@
 use std::{
     collections::{HashMap, HashSet},
-    path::Path,
+    path::{Path, PathBuf},
 };
 
 use clap::ValueEnum;
@@ -900,10 +900,6 @@ mod tests {
 }
 
 // Tauri commands
-
-use std::path::PathBuf;
-
-use crate::options::work::BmsFolderSetNameType;
 
 /// Split folders by first character
 ///

@@ -104,8 +104,6 @@ pub async fn generate_work_info_table(root: &Path) -> io::Result<()> {
 
 // Tauri commands
 
-use std::path::PathBuf;
-
 /// Check numbered folders
 ///
 /// # Errors

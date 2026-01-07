@@ -1,4 +1,4 @@
-use std::{collections::VecDeque, path::Path, str::FromStr};
+use std::{collections::VecDeque, path::Path, path::PathBuf, str::FromStr};
 
 use clap::ValueEnum;
 use tokio::{fs, io};
@@ -14,9 +14,7 @@ use crate::{
 pub const DEFAULT_TITLE: &str = "!!! UnknownTitle !!!";
 pub const DEFAULT_ARTIST: &str = "!!! UnknownArtist !!!";
 
-#[derive(
-    Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize, specta::Type,
-)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde::Serialize, serde::Deserialize)]
 pub enum BmsFolderSetNameType {
     /// Suitable for cases where you want to directly replace directory name with "Title [Artist]"
     ReplaceTitleArtist = 0,
@@ -314,10 +312,6 @@ pub async fn remove_zero_sized_media_files(
 }
 
 // Tauri commands
-
-use std::path::PathBuf;
-
-use crate::fs::moving::ReplacePreset;
 
 /// Set directory name based on BMS file
 ///
